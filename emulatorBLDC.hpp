@@ -5,12 +5,13 @@
 using namespace std;
 
 
+
 class EmulatorBLDC{
     public:
     EmulatorBLDC(int numberOfSamples, int numberOfSamplesInPhase);
 
     void printPhases();
-
+    
     void printAll();
 
     void setPhaseStates(int startPhase, int noiseProbInPercent);
@@ -31,11 +32,27 @@ class EmulatorBLDC{
     int* commStateArray;
     bool* logicOutputArra;
 
-    list<int> zeroCrossingPointer;
-
     int noiseFlag[numberOfPhases] = {0, 0, 0};
 
+    list<int> zeroCrossingPointer;
+
+    int lastTimeCrossingZero;
+    const static int numberOfSamplesSwitchTime = 3;
+    int switchTimeArray[numberOfSamplesSwitchTime];
+    int switchTimeActualPointer;
+    const float partOf60degrees = 0.5;
+
+    list<int> switchPhaseEvent;
+
     void PreCommState();
+
+    int getAverage(int* arrayOfSamples, int samples){
+        int tmpData = 0;
+        for(int i = 0; i < samples; i++){
+            tmpData += *(arrayOfSamples + i);
+        }
+        return tmpData /= samples;
+}
 
     void SetPhaseStateWithNoise(bool* phase, bool state, int noiseProbability);
 

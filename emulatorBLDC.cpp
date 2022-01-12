@@ -2,7 +2,8 @@
 
 using namespace std;
 
-EmulatorBLDC::EmulatorBLDC(int numberOfSamples, int numberOfSamplesInPhase):adcBackEMFFilter(0),commState(0){
+EmulatorBLDC::EmulatorBLDC(int numberOfSamples, int numberOfSamplesInPhase):
+adcBackEMFFilter(0),commState(0),switchTimeActualPointer(0),lastTimeCrossingZero(0){
     this->numberOfSamples = numberOfSamples;
     this->numberOfSamplesInPhase = numberOfSamplesInPhase;
 
@@ -22,7 +23,13 @@ EmulatorBLDC::EmulatorBLDC(int numberOfSamples, int numberOfSamplesInPhase):adcB
             bemfSignal[samp][i] = 1;
         }
     }
+
+    for(int i = 0; i < numberOfSamplesSwitchTime; i++){
+        switchTimeArray[i] = 0;
+    }
 }
+
+
 
 void EmulatorBLDC::printPhases(){
     for(int i = 0; i < numberOfSamples; i++){
@@ -56,6 +63,12 @@ void EmulatorBLDC::printAll(){
             zeroCrossingPointer.pop_front();
             cout << "  <- zero crossing event";
         }
+
+        if(switchPhaseEvent.size() > 0 && switchPhaseEvent.front() == i){
+            switchPhaseEvent.pop_front();
+            cout << "  <- switch phase event";
+        }
+
         cout << "\n";
     }
 }
@@ -126,6 +139,13 @@ void EmulatorBLDC::BEMFFilter(void){
         if (adcBackEMFFilter & 0b00000001){
             PreCommState();
             zeroCrossingPointer.push_back(samp);
+
+            switchTimeArray[switchTimeActualPointer++] = samp - lastTimeCrossingZero;
+            if(switchTimeActualPointer == numberOfSamplesSwitchTime) switchTimeActualPointer = 0;
+            
+            switchPhaseEvent.push_back(samp + (getAverage(switchTimeArray, numberOfSamplesSwitchTime) * partOf60degrees));
+
+            lastTimeCrossingZero = samp;
         }
         commStateArray[samp] = commState;
     }

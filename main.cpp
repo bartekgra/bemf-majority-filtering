@@ -4,9 +4,9 @@ using namespace std;
 
 int main()
 {
-    int numberOfSamples = 180;
-    int numberOfSamplesInPhase = 30;
-    int noiseProbabilityInPercent = 20;
+    int numberOfSamples = 280;
+    int numberOfSamplesInPhase = 20;
+    int noiseProbabilityInPercent = 50;
     int startPhase = 4;
 
     EmulatorBLDC bldc = EmulatorBLDC(numberOfSamples, numberOfSamplesInPhase);
