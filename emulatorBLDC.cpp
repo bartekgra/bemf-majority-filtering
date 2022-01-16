@@ -136,19 +136,24 @@ void EmulatorBLDC::BEMFFilter(void){
         //Majority detection filter
         adcBackEMFFilter = ADC_BEMF_FILTER[adcBackEMFFilter];
         adcBackEMFFilterArray[samp] = adcBackEMFFilter;
-        if (adcBackEMFFilter & 0b00000001){
+        if (adcBackEMFFilter & 0b00000001){ // true if zero crossing detected 
             PreCommState();
             zeroCrossingPointer.push_back(samp);
 
-            switchTimeArray[switchTimeActualPointer++] = samp - lastTimeCrossingZero;
-            if(switchTimeActualPointer == numberOfSamplesSwitchTime) switchTimeActualPointer = 0;
-            
-            switchPhaseEvent.push_back(samp + (getAverage(switchTimeArray, numberOfSamplesSwitchTime) * partOf60degrees));
-
-            lastTimeCrossingZero = samp;
+            SwitchPhaseEvent(samp);
         }
         commStateArray[samp] = commState;
     }
+}
+
+void EmulatorBLDC::SwitchPhaseEvent(int actualSample){
+    switchTimeArray[switchTimeActualPointer++] = actualSample - lastTimeCrossingZero;
+    if(switchTimeActualPointer == numberOfSamplesSwitchTime) switchTimeActualPointer = 0;
+    
+    // calculate how many samples from now the switching should take place
+    switchPhaseEvent.push_back(actualSample + (getAverage(switchTimeArray, numberOfSamplesSwitchTime) * partOf60degrees));
+
+    lastTimeCrossingZero = actualSample;
 }
 
 void EmulatorBLDC::PreCommState(){

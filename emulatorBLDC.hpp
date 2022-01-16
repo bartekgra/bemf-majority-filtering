@@ -44,6 +44,8 @@ class EmulatorBLDC{
 
     list<int> switchPhaseEvent;
 
+    void SwitchPhaseEvent(int actualSample);
+
     void PreCommState();
 
     int getAverage(int* arrayOfSamples, int samples){
