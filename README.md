@@ -41,6 +41,7 @@ For initial parameters:
 We get:
 <details><summary>show example</summary>
 <p>
+```c_cpp
 No. | Sig. ABC|Log|Com|Filter
 0   |  0 1 1  | 1 | 0 | 2
 1   |  1 1 0  | 1 | 0 | 6
@@ -322,5 +323,6 @@ No. | Sig. ABC|Log|Com|Filter
 277 |  1 0 0  | 1 | 1 | 54
 278 |  0 0 0  | 1 | 1 | 46
 279 |  1 1 1  | 0 | 1 | 28
+```
 </p>
 </details>
