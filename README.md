@@ -1,8 +1,7 @@
 # Back EMF Majority Function Filtering for BLDC
 
 ## About The Project
-Project is create to simulate real waveform of signals from BLDC motor called Back Electromotive Force (BEMF) containing interferences. Main aim of this project is to show how detect when zero crossing occure using Majority Filter and conseqeunty of that when commutator phase switch function should execute. Simulation assumes a constant engine rotation.
-
+Project is create to simulate real waveform of signals from BLDC motor called Back Electromotive Force (BEMF) containing interferences. Main aim of this project is to show how detect when zero crossing occure using Majority Filter and conseqeunty of that when commutator phase switch function should execute.
 
 Project relates to an article Digi-Key: https://www.digikey.pl/pl/articles/sensorless-bldc-motor-control-with-back-emf-filtering-using-a-majority-function
 
@@ -39,9 +38,7 @@ For initial parameters:
 ```
 
 We get:
-<details><summary>show example</summary>
-<p>
-```c_cpp
+```
 No. | Sig. ABC|Log|Com|Filter
 0   |  0 1 1  | 1 | 0 | 2
 1   |  1 1 0  | 1 | 0 | 6
@@ -324,5 +321,3 @@ No. | Sig. ABC|Log|Com|Filter
 278 |  0 0 0  | 1 | 1 | 46
 279 |  1 1 1  | 0 | 1 | 28
 ```
-</p>
-</details>
